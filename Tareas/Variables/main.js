@@ -7,7 +7,7 @@ let increment = 20;
 function setup()
 {
 	createCanvas (windowWidth, windowHeight);
-	background (135);
+	background (0, 185, 157);
 
 	xMin = windowWidth;
 	yMin = windowHeight;
