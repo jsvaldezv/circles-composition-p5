@@ -39,7 +39,6 @@ function draw()
 	fill (255);
 	circle (pos.x, pos.y, ballSize);
 
-	//acc.mult (fric);
 	vel.add (acc);
 	vel.mult(fric)
 	pos.add (vel);
