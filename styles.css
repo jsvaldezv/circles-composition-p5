@@ -30,8 +30,8 @@ header{
 	list-style: none;
 	font-size: 20px;
 	background-color: rgb(0, 185, 157);
-	margin: 0;
-	width: 15rem;
+	margin: 1rem 2rem;
+	width: auto;
 	height: 2rem;
 	border-radius: 20px;
 
@@ -45,4 +45,5 @@ header{
 .tareas ul li a{
 	color:white;
 	text-decoration: none;
+	margin: 1rem 2rem;
 }

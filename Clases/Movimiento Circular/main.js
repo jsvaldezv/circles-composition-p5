@@ -5,6 +5,9 @@ let r, g, b, incR, incG, incB;
 let carr, modu;
 let doPlay;
 
+let iM;
+let fMod;
+
 function setup()
 {
 	createCanvas (windowWidth, windowHeight);
@@ -48,7 +51,11 @@ function draw()
 	px++;
 	px = px%width;
 
-	if (doPlay) {
+	if (doPlay) 
+	{
+		iM = mouseX;
+		fMod = mouseY;
+
 		modu.freq(mouseX);
 		carr.freq(mouseY);
 	}
@@ -65,8 +72,6 @@ function draw()
 	
 	if (b > 255 || b < 0)
 		incB *= -1;
-
-	
 }
 
 function mouseClicked()
@@ -76,7 +81,7 @@ function mouseClicked()
 	if (doPlay)
 	{
 		modu.freq (110);
-		modu.amp (50);
+		modu.amp (iM * fMod); // dF
 
 		carr.amp (0.5);
 		modu.disconnect();

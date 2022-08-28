@@ -26,7 +26,7 @@ function setup()
 
 function draw()
 {
-	background (0);
+	background (0, 185, 157);
 
 	freq = 0.2;
 	t = millis()/1000;

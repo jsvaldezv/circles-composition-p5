@@ -35,7 +35,7 @@ function setup()
 
 function draw()
 {
-	background (0);
+	background (0, 185, 157);
 	fill (255);
 	circle (pos.x, pos.y, ballSize);
 
