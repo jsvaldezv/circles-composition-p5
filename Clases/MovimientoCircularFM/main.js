@@ -1,8 +1,11 @@
 let pos;
-let ph, freq, t, ct, rad, px;
-let r, g, b, incR, incG, incB;
+let ph, freq, t, ct, rad;
+let px, py;
+let r, g, b;
+let incR, incG, incB;
 
 let carr, modu;
+let delay;
 let doPlay;
 
 let iM;
@@ -20,44 +23,45 @@ function setup()
 	rad = 150;
 	freq = 0.1;
 	px = 0;
+
 	r = 45;
 	g = 80;
 	b = 200;
 
-	incR = 1;
-	incG = 2;
+	incR = 2;
+	incG = 1;
 	incB = 0.5;
-
 	doPlay = false;
+
 	carr = new p5.Oscillator("sine");
 	modu = new p5.Oscillator("sine");
+	delay = new p5.Delay();
 }
 
 function draw()
 {
-	//background (0);
-
 	t = millis()/1000;
 	ph = TWO_PI * freq * t;
-	ct.set(px, height/2 + 150 * cos(px/width * TWO_PI));
+	py = height/2 + 150 * cos (TWO_PI*5*px/width);
+
+	ct.set (px, py);
 	pos.x = ct.x + rad * cos(ph);
 	pos.y = ct.y + rad * sin(ph);
 
-	//fill (255);
-	//circle (pos.x, pos.y, 20);
 	stroke (r,g,b);
 	line (ct.x, ct.y, pos.x, pos.y);
 
 	px++;
-	px = px%width;
+	px = px % width;
 
 	if (doPlay) 
 	{
-		iM = mouseX;
-		fMod = mouseY;
+		iM = map (py, height/2+150, height/2-150, 0, 100);
+		fMod = map (px, width/2+150, width/2-150, 0, 100);
 
-		modu.freq(mouseX);
-		carr.freq(mouseY);
+		modu.freq (iM);
+		modu.amp (iM * fMod);
+		carr.amp (map (py, height/2+150, height/2-150, 0, 100));
 	}
 
 	r += incR;
@@ -81,13 +85,16 @@ function mouseClicked()
 	if (doPlay)
 	{
 		modu.freq (110);
-		modu.amp (iM * fMod); // dF
-
-		carr.amp (0.5);
+		modu.amp (50); // esto es DeltaF
+	
+		carr.amp (map (py, height/2+150, height/2-150, 0, 100));
 		modu.disconnect();
+		
 		carr.freq (modu);
-		modu.start();
+		modu.start()
 		carr.start();
+
+		delay.process (carr, 0.2, .7, 3000);
 	}
 
 	else
