@@ -1,9 +1,9 @@
 class Particle
 {
-	constructor()
+	constructor(inVector)
 	{
-		this.pos = createVector (width/2, 0);
-		this.vel = createVector (0, 0);
+		this.pos = createVector (inVector);
+		this.vel = createVector (random(0, 10), random(0, 10));
 		this.acc = createVector (0, 0.98);
 		this.damp = 0.99;
 	}

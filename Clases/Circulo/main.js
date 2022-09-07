@@ -1,10 +1,11 @@
 let freq, t, rad;
 let increment = 0;
 let colorBall = 0;
-let numBalls = 15;
+let numBalls = 10;
 let circles = [];
 let doPlay = false;
 
+let notes = []
 class Ball
 {
 	constructor(inWidth, inHeight, inDephase)
@@ -19,13 +20,19 @@ class Ball
 
 		// Sound
 		this.played = false;
-		this.env = new p5.Envelope (0, 0.7, 0.3, 0.1);
+		this.env = new p5.Envelope (0, 0.5, 0.3, 0.0);
 		this.osc = new p5.Oscillator ("triangle");
 		this.osc.freq (300);
 		this.osc.amp (this.env);
+
+		this.env.setInput (this.osc);
 	}
 
 	setFreq (inFreq) { this.osc.freq (inFreq); }
+
+	setPlayed (inState) { this.played = inState; }
+
+	getPlayed() { return this.played; }
 }
 
 function setup()
@@ -36,13 +43,17 @@ function setup()
 	increment = TWO_PI / numBalls;
 	t = millis()/1000;
 	rad = 150;
-	freq = 0.1;
+	freq = 0.25;
 	let dephase = 0;
+
+	let firstNote = 60;
 
 	for (let i = 0; i < numBalls; i++)
 	{
 		circles.push (new Ball(width, height, dephase));
 		dephase += increment;
+
+		circles[i].osc.freq(midiToFreq(firstNote+i));
 	}
 }
 
@@ -54,8 +65,8 @@ function draw()
 
 	for (let i = 0; i < numBalls; i++)
 	{
-		circles[i].ph = TWO_PI * t * freq + circles[i].dephase;
 		circles[i].phb = circles[i].ph;
+		circles[i].ph = TWO_PI * t * freq + circles[i].dephase;
 	
 		circles[i].pos.x = circles[i].ct.x + rad * cos (circles[i].ph);
 		circles[i].pos.y = circles[i].ct.y + rad * sin (circles[i].ph);
@@ -66,40 +77,45 @@ function draw()
 		line (circles[i].ct.x, circles[i].ct.y, circles[i].pos.x, circles[i].pos.y);
 		circle (circles[i].pos.x, circles[i].pos.y, 20);
 
+		circles[i].ph = circles[i].ph % TWO_PI;
 		validatePhase(i);
 	}
 }
 
 function validatePhase (index)
 {
-	let twoSeven = TWO_PI/4;
+	let quarter = TWO_PI/4;
 
-	if (circles[index].ph > TWO_PI)
+	// First quarter
+	if (circles[index].phb >= 0 && circles[index].phb < quarter)
 	{
-		circles[index].color = [0, 0, 0];
-		circles[index].ph = circles[index].ph % TWO_PI;
-		circles[index].played = false;
+		// orange
+		circles[index].color = [234, 110, 0];
 	}
 
-	if (circles[index].ph > TWO_PI/4)
+	// Second quarter
+	if (circles[index].phb >= quarter && circles[index].phb < quarter * 2)
 	{
-		circles[index].color = [243, 59, 0];
-		circles[index].played = true;
+		// green
+		circles[index].color = [53, 234, 0];		
 	}
 
-	if (circles[index].ph > TWO_PI/2)
+	// Third quarter
+	if (circles[index].phb >= (quarter * 2) && circles[index].phb < (quarter * 3))
 	{
-		circles[index].color = [224, 0, 243];
+		// blue
+		circles[index].color = [0, 53, 234];
 	}
 
-	if (circles[index].ph > twoSeven * 3)
+	// Fourth quarter
+	if (circles[index].phb >= circles[index].ph)
 	{
-		circles[index].color = [243, 114, 0];			
+		circles[index].color = [255, 255, 255];
 
 		if (doPlay)
 		{
 			circles[index].osc.start();
-			//circles[index].env.play (circles[index].osc);
+			circles[index].env.play (circles[index].osc);
 		}
 	}
 }
@@ -111,18 +127,21 @@ function mouseClicked()
 	if (doPlay)
 	{
 		console.log("Start playing");
-		// for (let i = 0; i < numBalls; i++)
-		// {
-		// 	circles[i].env.play();
-		// }
+
+		for (let i = 0; i < numBalls; i++)
+		{
+			//circles[i].osc.start();
+			// circles[i].env.play();
+		}
 	}
 
 	else
 	{
 		console.log("Stop playing");
-		// for (let i = 0; i < numBalls; i++)
-		// {
-		// 	circles[i].osc.stop();
-		// }
+
+		for (let i = 0; i < numBalls; i++)
+		{
+			circles[i].osc.stop();
+		}
 	}
 }

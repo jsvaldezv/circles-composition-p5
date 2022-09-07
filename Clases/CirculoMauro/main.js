@@ -1,6 +1,7 @@
 let damp;
 let pos, vel, acc;
-let prt;
+let prt = [];
+let N = 25;
 
 function setup()
 {
@@ -13,18 +14,31 @@ function setup()
 
 	damp = 0.99;
 
-	prt = new Particle();
+	for (let i = 0; i < N; i++)
+	{
+		let temp = createVector (i*width/N, 100);
+		prt.push (new Particle(temp));
+	}
 }
 
 function draw()
 {
 	background (145);
 
-	prt.update();
-	prt.draw();
+	for (let i = 0; i < N; i++)
+	{
+		prt[i].update();
+		prt[i].draw();
+
+		if (prt[i].vel.mag() < 0.5)
+		{
+			prt[i].pos.set (mouseX, mouseY);
+			prt[i].vel.set (mouseX - pmouseX, mouseY - pmouseY);
+		}
+	}
 }
 
 function mouseClicked()
 {
-	prt.clickedMouse();
+
 }
