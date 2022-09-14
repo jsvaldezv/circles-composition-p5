@@ -1,14 +1,18 @@
 class Ball
 {
-	constructor (inWidth, inHeight, inDephase)
+	constructor (inWidth, inHeight, inDephase, xDephase, yDephase, inMoveIncrement)
 	{
 		// Paint
 		this.ct = createVector (inWidth/2, inHeight/2);
 		this.pos = createVector (0, 0);
 		this.ph = 0;
 		this.phb = 0;
-		this.color = [0, 0, 0];
+		this.color = [255, 255, 255];
 		this.dephase = inDephase;
+
+		this.xDephase = xDephase;
+		this.yDephase = yDephase;
+		this.moveIncrement = inMoveIncrement;
 
 		// Sound
 		this.played = false;
@@ -43,7 +47,7 @@ class Ball
 		let quarter = TWO_PI/4;
 
 		// First quarter
-		if (this.phb >= 0 && this.phb < quarter)
+		if (this.phb > (quarter * 3))
 		{
 			// orange
 			this.color = [234, 110, 0];
@@ -66,6 +70,7 @@ class Ball
 		// Fourth quarter
 		if (this.phb >= this.ph)
 		{
+			// white
 			this.color = [255, 255, 255];
 	
 			if (doPlay)
@@ -87,8 +92,14 @@ class Ball
 		stroke (255, 255, 255);
 	
 		fill (this.color[0], this.color[1], this.color[2]);
-		line (this.ct.x, this.ct.y, this.pos.x, this.pos.y);
-		circle (this.pos.x, this.pos.y, 20);
+
+		line (	this.ct.x + this.xDephase, 
+				this.ct.y + this.yDephase, 
+				this.pos.x + this.xDephase, 
+				this.pos.y + this.yDephase);
+		
+		circle (this.pos.x + this.xDephase, 
+				this.pos.y + this.yDephase, 20);
 
 		this.ph = this.ph % TWO_PI;
 		this.checkPhase();

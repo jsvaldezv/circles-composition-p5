@@ -1,8 +1,11 @@
 let freq, t, rad;
 let increment = 0;
 let colorBall = 0;
-let numBalls = 15;
+
+let numCirles = 10;
+let numBalls = 3;
 let circles = [];
+
 let doPlay = false;
 
 function setup()
@@ -10,31 +13,31 @@ function setup()
 	createCanvas (windowWidth, windowHeight);
 	background (0);
 
-	increment = TWO_PI / numBalls;
+	increment = TWO_PI / numCirles;
 	t = millis()/1000;
 	rad = 150;
 	freq = 0.25;
 
-	let dephase = 0;
-	let firstNote = 60;
+	let xDephase = 0;
+	let yDephase = 0;
+	let moveIncrement = 0;
 
-	for (let i = 0; i < numBalls; i++)
+	for (let i = 0; i < numCirles; i++)
 	{
-		circles.push (new Ball (width, height, dephase));
-		dephase += increment;
+		circles.push (new Circle (numBalls, xDephase, yDephase, moveIncrement));
 
-		circles[i].osc.freq (midiToFreq(firstNote+i));
-		circles[i].oscTwo.freq (midiToFreq(firstNote+ (i + 3)));
+		xDephase += 30;
+		yDephase += 30;
+		moveIncrement += 20;
 	}
 }
 
 function draw()
 {
 	background (0, 0, 0);
-
 	t = millis()/1000;
 
-	for (let i = 0; i < numBalls; i++)
+	for (let i = 0; i < numCirles; i++)
 		circles[i].paint(t);
 }
 
@@ -46,7 +49,7 @@ function mouseClicked()
 	{
 		console.log("Start playing");
 
-		for (let i = 0; i < numBalls; i++)
+		for (let i = 0; i < numCirles; i++)
 			circles[i].prepareSound();
 	}
 
@@ -54,7 +57,7 @@ function mouseClicked()
 	{
 		console.log("Stop playing");
 
-		for (let i = 0; i < numBalls; i++)
+		for (let i = 0; i < numCirles; i++)
 			circles[i].stopSound();
 	}
 }
