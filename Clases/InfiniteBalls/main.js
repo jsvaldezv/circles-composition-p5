@@ -23,7 +23,7 @@ function setup()
 
 function draw()
 {
-	background (145);
+	background (0, 185, 157);
 
 	for (let i = 0; i < N; i++)
 	{

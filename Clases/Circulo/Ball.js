@@ -1,18 +1,14 @@
 class Ball
 {
-	constructor (inWidth, inHeight, inDephase, xDephase, yDephase, inMoveIncrement)
+	constructor (inWidth, inHeight, inDephase)
 	{
 		// Paint
 		this.ct = createVector (inWidth/2, inHeight/2);
 		this.pos = createVector (0, 0);
 		this.ph = 0;
 		this.phb = 0;
-		this.color = [255, 255, 255];
+		this.color = [0, 0, 0];
 		this.dephase = inDephase;
-
-		this.xDephase = xDephase;
-		this.yDephase = yDephase;
-		this.moveIncrement = inMoveIncrement;
 
 		// Sound
 		this.played = false;
@@ -85,21 +81,15 @@ class Ball
 	{
 		this.phb = this.ph;
 		this.ph = TWO_PI * inT * freq + this.dephase;
-	
+
 		this.pos.x = this.ct.x + rad * cos (this.ph);
 		this.pos.y = this.ct.y + rad * sin (this.ph);
-	
-		stroke (255, 255, 255);
-	
-		fill (this.color[0], this.color[1], this.color[2]);
 
-		line (	this.ct.x + this.xDephase, 
-				this.ct.y + this.yDephase, 
-				this.pos.x + this.xDephase, 
-				this.pos.y + this.yDephase);
-		
-		circle (this.pos.x + this.xDephase, 
-				this.pos.y + this.yDephase, 20);
+		stroke (255, 255, 255);
+
+		fill (this.color[0], this.color[1], this.color[2]);
+		line (this.ct.x, this.ct.y, this.pos.x, this.pos.y);
+		circle (this.pos.x, this.pos.y, 20);
 
 		this.ph = this.ph % TWO_PI;
 		this.checkPhase();
