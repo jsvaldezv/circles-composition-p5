@@ -25,8 +25,8 @@ function draw()
 	background (0, 0, 0);
 	checkColors();
 
-	drawingContext.shadowBlur = 15;
-	drawingContext.shadowColor = color(colorOne, colorTwo, colorThree);
+	//drawingContext.shadowBlur = 15;
+	//drawingContext.shadowColor = color(colorOne, colorTwo, colorThree);
 
 	let gradient = drawingContext.createLinearGradient (width/2-200, height/2-200, width/2+200, height/2+200);
 	gradient.addColorStop (0, color (limitOne, colorOne, colorTwo, colorThree));
@@ -56,9 +56,6 @@ function checkColors()
 
 	if (colorThree >= 255 || colorThree <= 50)
 		incrementThree *= -1;
-
-	//console.log(incrementOne, incrementTwo, incrementThree);
-	//console.log(colorOne, colorTwo, colorThree);
 }
 
 function updateForms()
@@ -98,8 +95,6 @@ function updateForms()
 	colorThree = randomInt (0, 255);
 	limitOne = random (0, 1);
 	limitTwo = random (0, 1);
-
-	//console.log(colorOne, colorTwo, colorThree)
 
 	for (let i = 0; i < numCircles; i++)
 	{
