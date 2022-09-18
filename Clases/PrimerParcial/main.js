@@ -8,9 +8,62 @@ let F = ["F4", "A4", "C4", "E5", "G5", "Bb5"];
 
 let chords = [C, G, F];
 
+let colorOne, colorTwo, colorThree;
+let incrementOne = 1, incrementTwo = 1, incrementThree = 1;
+let limitOne, limitTwo;
+
 function setup()
 {
 	createCanvas (windowWidth, windowHeight);
+	strokeWeight(1);
+	updateForms();
+	setInterval(updateForms, 10000);
+}
+
+function draw()
+{
+	background (0, 0, 0);
+	checkColors();
+
+	drawingContext.shadowBlur = 15;
+	drawingContext.shadowColor = color(colorOne, colorTwo, colorThree);
+
+	let gradient = drawingContext.createLinearGradient (width/2-200, height/2-200, width/2+200, height/2+200);
+	gradient.addColorStop (0, color (limitOne, colorOne, colorTwo, colorThree));
+	gradient.addColorStop (0, color (limitTwo, colorOne, colorTwo, colorThree));
+	drawingContext.strokeStyle = gradient;
+
+	for (let i = 0; i < numCircles; i++)
+	{
+		for (let j = 0; j < circles[i].length; j++)
+		{
+			circles[i][j].paint();
+		}
+	}
+}
+
+function checkColors()
+{
+	colorOne += incrementOne;
+	colorTwo += incrementTwo;
+	colorThree += incrementThree;
+
+	if (colorOne >= 255 || colorOne <= 50)
+		incrementOne *= -1;
+
+	if (colorTwo >= 255 || colorTwo <= 50)
+		incrementTwo *= -1;
+
+	if (colorThree >= 255 || colorThree <= 50)
+		incrementThree *= -1;
+
+	//console.log(incrementOne, incrementTwo, incrementThree);
+	//console.log(colorOne, colorTwo, colorThree);
+}
+
+function updateForms()
+{
+	circles = [];
 
 	let x = (width/numCircles * 0.5);
 	let y = (height/numCircles * 0.5);
@@ -28,7 +81,7 @@ function setup()
 			circle.push (new Circle (randomInt(2, 10), 
 									 radio,
 									 x, 
-									 height * posY - (radio/2),
+									 height * posY,
 									 0.1,
 									 chordToUse[randomInt(0, chordToUse.length)],
 									 randomBool()));
@@ -40,26 +93,25 @@ function setup()
 		circles.push (circle);
 	}
 
-	//muCir.setInverse (true);
-}
+	colorOne = randomInt (0, 255);
+	colorTwo = randomInt (0, 255);
+	colorThree = randomInt (0, 255);
+	limitOne = random (0, 1);
+	limitTwo = random (0, 1);
 
-function draw()
-{
-	background (0, 0, 0);
+	//console.log(colorOne, colorTwo, colorThree)
 
-	for (let i = 0; i < numCircles; i++)
-	{
-		for (let j = 0; j < circles[i].length; j++)
-		{
-			circles[i][j].paint();
-		}
-	}
+	checkAudioStatus();
 }
 
 function mouseClicked()
 {
 	doPlay = !doPlay;
+	checkAudioStatus();
+}
 
+function checkAudioStatus()
+{
 	if (doPlay)
 	{
 		console.log("Start playing");

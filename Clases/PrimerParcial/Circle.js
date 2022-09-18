@@ -75,7 +75,7 @@ class Circle
 		// Fourth quarter - white
 		if (this.php[index] >= this.ph[index])
 		{
-			this.color[index] = [255, 255, 255];
+			this.color[index] = [colorOne, colorTwo, colorThree];
 			this.playSound (index);
 		}
 	}
@@ -108,13 +108,16 @@ class Circle
 				line (this.pos[0].x, this.pos[0].y, this.pos[this.numBalls-1].x, this.pos[this.numBalls-1].y);
 			}
 		}
+
+		//translate (p5.Vector.fromAngle(millis() / 1000, 10));
 	}
 
 	// Sound
 	prepareSound()
 	{
 		userStartAudio();
-		//this.delay.process (this.synth, 0.2, .7, 3000);
+		this.synth.amp(0.1);
+		this.delay.process (this.synth, 0.2, .7, 3000);
 	}
 
 	playSound (index)
@@ -127,6 +130,6 @@ class Circle
 
 	stopSound()
 	{
-
+		this.synth.disconnect();
 	}
 }
