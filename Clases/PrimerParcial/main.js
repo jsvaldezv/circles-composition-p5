@@ -1,5 +1,5 @@
 let circles = [];
-let numCircles = 5;
+let numCircles = 0;
 let doPlay = false;
 
 let C = ["C4", "E4", "G4", "B4", "D5", "F5"];
@@ -16,6 +16,9 @@ function setup()
 {
 	createCanvas (windowWidth, windowHeight);
 	strokeWeight(1);
+
+	numCircles = randomInt(1, 10);
+
 	updateForms();
 	setInterval(updateForms, 10000);
 }
@@ -25,8 +28,8 @@ function draw()
 	background (0, 0, 0);
 	checkColors();
 
-	//drawingContext.shadowBlur = 15;
-	//drawingContext.shadowColor = color(colorOne, colorTwo, colorThree);
+	//drawingContext.shadowBlur = 5;
+	//drawingContext.shadowColor = color(255, 255, 255);
 
 	let gradient = drawingContext.createLinearGradient (width/2-200, height/2-200, width/2+200, height/2+200);
 	gradient.addColorStop (0, color (limitOne, colorOne, colorTwo, colorThree));
@@ -60,6 +63,7 @@ function checkColors()
 
 function updateForms()
 {
+	numCircles = randomInt(1, 10);
 	circles = [];
 
 	let x = (width/numCircles * 0.5);
