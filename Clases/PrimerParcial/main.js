@@ -101,6 +101,14 @@ function updateForms()
 
 	//console.log(colorOne, colorTwo, colorThree)
 
+	for (let i = 0; i < numCircles; i++)
+	{
+		for (let j = 0; j < circles[i].length; j++)
+		{
+			circles[i][j].stopSound();
+		}
+	}
+
 	checkAudioStatus();
 }
 

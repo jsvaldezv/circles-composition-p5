@@ -116,6 +116,7 @@ class Circle
 	prepareSound()
 	{
 		userStartAudio();
+		this.synth.disconnect();
 		this.synth.amp(0.1);
 		this.delay.process (this.synth, 0.2, .7, 3000);
 	}
@@ -124,6 +125,7 @@ class Circle
 	{
 		if (doPlay)
 		{
+			//this.synth.disconnect();
 			this.synth.play (this.rootNote, this.randomVelocity(), 0, this.timeNote);
 		}
 	}
