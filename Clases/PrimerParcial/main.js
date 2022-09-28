@@ -11,6 +11,7 @@ let chords = [C, G, F];
 let colorOne, colorTwo, colorThree;
 let incrementOne = 1, incrementTwo = 1, incrementThree = 1;
 let limitOne, limitTwo;
+let count = 0;
 
 function setup()
 {
@@ -20,12 +21,13 @@ function setup()
 	numCircles = randomInt(1, 10);
 
 	updateForms();
-	setInterval(updateForms, 10000);
+	setInterval (updateForms, 10000);
 }
 
 function draw()
 {
-	background (0, 0, 0);
+	background (0, 15);
+	//background (0);
 	checkColors();
 
 	//drawingContext.shadowBlur = 5;
@@ -106,6 +108,19 @@ function updateForms()
 		{
 			circles[i][j].stopSound();
 		}
+	}
+
+	count++
+
+	if (count > 6)
+	{
+		// doPlay = !doPlay;
+		// checkAudioStatus();
+		// doPlay = !doPlay;
+		// checkAudioStatus();
+		// count = 0;
+
+		console.log ("RESET");
 	}
 
 	checkAudioStatus();
