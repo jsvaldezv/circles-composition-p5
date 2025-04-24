@@ -14,4 +14,4 @@ This project is a collection of generative visuals developed with p5.js, designe
 
 All visuals are created using p5.js, a JavaScript library for creative coding, and are meant to be lightweight, interactive, and visually engaging.
 
-Demo: https://jsvaldezv.github.io/visuals-p5/
+Demo: https://jsvaldezv.github.io/p5-visual-explorations/
